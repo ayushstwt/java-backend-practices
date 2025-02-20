@@ -1,0 +1,55 @@
+package com.ayshriv.springrestproj3.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+public class Customer {
+    private Integer cno;
+    private String cname;
+    private String cAddress;
+    private Float billAmt;
+
+    public Customer() {
+    }
+
+    public Customer(Integer cno, String cname, String cAddress, Float billAmt) {
+
+        this.cno = cno;
+        this.cname = cname;
+        this.cAddress = cAddress;
+        this.billAmt = billAmt;
+    }
+
+    public Integer getCno() {
+        return cno;
+    }
+
+    public void setCno(Integer cno) {
+        this.cno = cno;
+    }
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getcAddress() {
+        return cAddress;
+    }
+
+    public void setcAddress(String cAddress) {
+        this.cAddress = cAddress;
+    }
+
+    public Float getBillAmt() {
+        return billAmt;
+    }
+
+    public void setBillAmt(Float billAmt) {
+        this.billAmt = billAmt;
+    }
+}
