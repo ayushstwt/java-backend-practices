@@ -1,0 +1,101 @@
+package com.ayshriv.bootrestproj12miniprojectapidevelopment.service;
+
+import com.ayshriv.bootrestproj12miniprojectapidevelopment.entity.Tourist;
+import com.ayshriv.bootrestproj12miniprojectapidevelopment.error.TouristNotFoundException;
+import com.ayshriv.bootrestproj12miniprojectapidevelopment.repository.ITouristRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service("touristManagementService")
+public class ITouristManagementServiceImpl implements ITouristManagementService {
+
+    @Autowired
+    private ITouristRepository touristRepository;
+
+    @Override
+    public String registerTourist(Tourist tourist) {
+        touristRepository.save(tourist);
+        return "Tourist Registered Successfully";
+    }
+
+    @Override
+    public List<Tourist> showAllTourist() {
+        List<Tourist> touristList = touristRepository.findAll();
+        //sort the record based on the id in ascending order
+        touristList.sort((t1, t2) -> t1.getId().compareTo(t2.getId()));
+        return touristList;
+    }
+
+    @Override
+    public List<Tourist> showTouristByBudget(Double startBudget, Double endBudget) {
+        List<Tourist> touristList = touristRepository.showAllTouristByBudget(startBudget, endBudget);
+        return touristList;
+    }
+
+    @Override
+    public Tourist showTouristById(Integer id)throws TouristNotFoundException {
+        Tourist tourist = touristRepository.findById(id).orElseThrow(() -> new TouristNotFoundException("Tourist not found"));
+        return tourist;
+    }
+
+    @Override
+    public String updateTourist(Tourist tourist) throws TouristNotFoundException{
+        Optional<Tourist> optional = touristRepository.findById(tourist.getId());
+        if (optional.isPresent())
+        {
+            touristRepository.save(tourist);
+            return "Tourist Updated Successfully";
+        }
+        else
+        {
+            throw new TouristNotFoundException(tourist.getId()+" Tourist Not found!");
+        }
+    }
+
+    @Override
+    public String deleteTourist(Integer id)throws TouristNotFoundException {
+        Tourist tourist = touristRepository.findById(id).orElseThrow(() -> new TouristNotFoundException("Tourist not found"));
+        touristRepository.delete(tourist);
+        return "Tourist Deleted Successfully";
+    }
+
+    @Override
+    public List<Tourist> getTouristByName(String name) {
+        List<Tourist> tourists = touristRepository.findAllTouristsByName(name);
+        return tourists;
+    }
+
+    @Override
+    public String updateTouristBudgetById(Integer id, Double hikePercentage) throws TouristNotFoundException {
+        Optional<Tourist> tourist = touristRepository.findById(id);
+        if(tourist.isPresent())
+        {
+            Tourist touristFound = tourist.get();
+            Double budget = touristFound.getBudget();
+            Double newBudget=(budget*(hikePercentage/100.0));
+            touristFound.setBudget(newBudget);
+            touristRepository.save(touristFound);
+            return "tourist budget is hiked and new budget is : "+ newBudget;
+        }
+        else{
+            throw new TouristNotFoundException(id+" Tourist Not found !");
+        }
+    }
+
+    @Override
+    public String removeTouristByBudgetRange(Double start, Double end) {
+
+        return "";
+    }
+
+    @Override
+    public String removeTouristsByPackageName(String packageName) {
+        touristRepository.deleteTouristByPackageType(packageName);
+        return "tourist removed successfully!";
+    }
+
+
+}
