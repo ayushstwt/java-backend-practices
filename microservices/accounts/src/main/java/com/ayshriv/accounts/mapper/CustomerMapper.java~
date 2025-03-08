@@ -1,0 +1,5 @@
+package com.ayshriv.accounts.mapper;
+
+public class CustomerMapper {
+    
+}
