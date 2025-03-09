@@ -13,12 +13,9 @@ import com.ayshriv.accounts.mapper.CustomerMapper;
 import com.ayshriv.accounts.repository.AccountsRepository;
 import com.ayshriv.accounts.repository.CustomerRepository;
 import com.ayshriv.accounts.service.IAccountsService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -47,8 +44,6 @@ public class AccountServiceImpl implements IAccountsService {
         if (optionalCustomer.isPresent()) {
             throw new CustomerAlreadyExistsException(CustomerConstants.CUSTOMER_ALREADY_EXISTS_WITH_MOBILE_NUMBER +customerDto.getMobileNumber());
         }
-        customer.setCreatedBy("AYSHRIV");
-        customer.setCreatedAt(LocalDateTime.now());
         Customer savedCustomer = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(savedCustomer));
     }
@@ -68,8 +63,6 @@ public class AccountServiceImpl implements IAccountsService {
         newAccount.setCustomerId(customer.getCustomerId());
         newAccount.setAccountType(AccountConstants.SAVINGS);
         newAccount.setBranchAddress(AccountConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("AYSHRIV");
         return newAccount;
     }
 
