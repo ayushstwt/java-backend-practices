@@ -1,0 +1,4 @@
+package com.ayshriv.cards.audit;
+
+public class AuditAwareImpl {
+}

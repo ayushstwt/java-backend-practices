@@ -1,0 +1,4 @@
+package com.ayshriv.cards.mapper;
+
+public class CardsMapper {
+}

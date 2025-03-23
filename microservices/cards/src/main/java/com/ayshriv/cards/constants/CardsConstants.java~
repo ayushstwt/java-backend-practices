@@ -1,0 +1,6 @@
+package com.ayshriv.cards.constants;
+
+public class CardsConstants {
+    private CardsConstants() {}
+    
+}

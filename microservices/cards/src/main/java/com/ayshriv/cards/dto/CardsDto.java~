@@ -1,0 +1,9 @@
+package com.ayshriv.cards.dto;
+
+public class CardsDto {
+    private String cardNumber;
+    private String cardType;
+    private int totalLimit;
+    private int amountUsed;
+    private int availableAmount;
+}
